@@ -1,0 +1,66 @@
+{
+  "name": "entry-point",
+  "license": "AGPL-3.0-or-later",
+  "version": "1.0.0",
+  "description": "Enterprise giveaway platform enabling verified creators to host transparent giveaways with real-time updates and payment processing.",
+  "homepage": "https://github.com/Stagzy/Entry-Point",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Stagzy/Entry-Point.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Stagzy/Entry-Point/issues"
+  },
+  "author": "Stagzy",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "setup-db": "node scripts/setup-database.js",
+    "reset-db": "node scripts/setup-database.js --reset"
+  },
+  "dependencies": {
+    "@expo/cli": "^54.0.6",
+    "@expo/vector-icons": "^14.1.0",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-google-signin/google-signin": "^15.0.0",
+    "@react-navigation/bottom-tabs": "^7.4.2",
+    "@react-navigation/native": "^7.1.14",
+    "@react-navigation/stack": "^7.4.2",
+    "@stripe/stripe-react-native": "^0.45.0",
+    "@supabase/supabase-js": "^2.53.0",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.2.1",
+    "expo": "^54.0.8",
+    "expo-apple-authentication": "^7.2.4",
+    "expo-constants": "^17.1.7",
+    "expo-dev-client": "~5.2.4",
+    "expo-device": "^7.1.4",
+    "expo-haptics": "~14.1.4",
+    "expo-image-picker": "^16.1.4",
+    "expo-linear-gradient": "^14.1.5",
+    "expo-notifications": "^0.31.4",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-purchases": "^9.3.0",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.11.1",
+    "react-native-url-polyfill": "^2.0.0",
+    "react-native-web": "^0.20.0",
+    "stripe": "^18.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~19.0.10",
+    "supabase": "^2.39.2",
+    "typescript": "~5.8.3"
+  }
+}

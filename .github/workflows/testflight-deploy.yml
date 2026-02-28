@@ -1,0 +1,71 @@
+name: 🚀 Deploy to TestFlight
+
+on:
+  # Auto-deploy disabled for production launch
+  # push:
+  #   branches: [main]
+  #   paths-ignore:
+  #     - 'README.md'
+  #     - 'docs/**'
+  #     - '*.md'
+  
+  # Trigger manually from GitHub Actions tab only
+  workflow_dispatch:
+    inputs:
+      build_profile:
+        description: 'Build profile to use'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - preview
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📱 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔧 Setup EAS CLI
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 🍎 Build iOS app for TestFlight
+        run: |
+          eas build --platform ios --profile ${{ github.event.inputs.build_profile || 'production' }} --non-interactive --auto-submit
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📝 Comment on commit
+        uses: actions/github-script@v7
+        if: github.event_name == 'push'
+        with:
+          script: |
+            github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: '🚀 iOS build started! Check [EAS Dashboard](https://expo.dev) for progress.'
+            })
+
+      - name: 🎉 Notify success
+        if: success()
+        run: echo "✅ Build submitted to TestFlight successfully!"
+
+      - name: ❌ Notify failure
+        if: failure()
+        run: echo "❌ Build failed. Check the logs above."
